@@ -3,7 +3,6 @@ package io_reader
 import (
 	"fmt"
 	"io"
-	"log"
 	"strings"
 )
 
@@ -35,15 +34,15 @@ func ReaderSplit(strReader *strings.Reader, n int) []string {
 		}
 
 	}
+	fmt.Println(arr)
 	return arr
 }
 func SeekTillHalfOfString(strReader *strings.Reader, n int) []string {
 	buf := make([]byte, strReader.Len())
 	nn, err := strReader.Read(buf)
 	if err == io.EOF {
-		log.Println("we reached EOF")
+
 	} else if err != nil {
-		log.Fatal(err)
 	}
 
 	return []string{string(buf[nn/2:])}
