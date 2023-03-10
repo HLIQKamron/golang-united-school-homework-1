@@ -7,8 +7,9 @@ import (
 )
 
 func ReaderSplit(strReader *strings.Reader, n int) []string {
-	buffer := make([]byte, 2)
+	buffer := make([]byte, n)
 	str := ""
+	arr := []string{}
 	for {
 		_, err := strReader.Read(buffer)
 		if err != nil {
@@ -17,33 +18,15 @@ func ReaderSplit(strReader *strings.Reader, n int) []string {
 			}
 			break
 		}
-		if string(buffer) != "\n" && string(buffer) != "\t" {
-			str += string(buffer)
-		}
+		str += string(buffer)
+		arr = append(arr, str)
+		str = ""
 	}
-	str = strings.Join(strings.Split(strings.Join(strings.Split(str, "\n"), ""), "\t"), " ")
-	str2 := ""
-	arr := []string{}
-	for i := 0; i < len(str); i++ {
-		if string(str[i]) != " " && string(str[i]) != "\t" {
-			str2 += string(str[i])
-		}
-		if len(str2) == n || i == len(str)-1 {
-			arr = append(arr, str2)
-			str2 = ""
-		}
-
-	}
-	fmt.Println(arr)
 	return arr
 }
 func SeekTillHalfOfString(strReader *strings.Reader, n int) []string {
 	buf := make([]byte, strReader.Len())
-	nn, err := strReader.Read(buf)
-	if err == io.EOF {
-
-	} else if err != nil {
-	}
+	nn, _ := strReader.Read(buf)
 
 	return []string{string(buf[nn/2:])}
 }
